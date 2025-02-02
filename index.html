@@ -330,10 +330,10 @@
             <h3></h3>
             <div class="selection-options">
                 <div class="quantity-input">
-                    <label for="quibe">Quibe:</label>
-                    <button onclick="decreaseValue('quibe')">-</button>
-                    <input type="number" id="quibe" value="0" min="0">
-                    <button onclick="increaseValue('quibe')">+</button>
+                    <label for="presunto_queijo">Presunto e Queijo:</label>
+                    <button onclick="decreaseValue('presunto_queijo')">-</button>
+                    <input type="number" id="presunto_queijo" value="0" min="0">
+                    <button onclick="increaseValue('presunto_queijo')">+</button>
                 </div>
                 <div class="quantity-input">
                     <label for="coxinha">Coxinha de Frango:</label>
@@ -352,12 +352,6 @@
                     <button onclick="decreaseValue('enroladinho')">-</button>
                     <input type="number" id="enroladinho" value="0" min="0">
                     <button onclick="increaseValue('enroladinho')">+</button>
-                </div>
-                <div class="quantity-input">
-                    <label for="bolinha">Bolinha de Queijo:</label>
-                    <button onclick="decreaseValue('bolinha')">-</button>
-                    <input type="number" id="bolinha" value="0" min="0">
-                    <button onclick="increaseValue('bolinha')">+</button>
                 </div>
             </div>
             <div class="progress-container">
@@ -440,12 +434,11 @@
     }
     function calculateTotal() {
         const pricePerUnit = 0.85;
-        const quibe = parseInt(document.getElementById('quibe').value) || 0;
+        const presunto_queijo = parseInt(document.getElementById('presunto_queijo').value) || 0;
         const coxinha = parseInt(document.getElementById('coxinha').value) || 0;
         const travesseirinho = parseInt(document.getElementById('travesseirinho').value) || 0;
         const enroladinho = parseInt(document.getElementById('enroladinho').value) || 0;
-        const bolinha = parseInt(document.getElementById('bolinha').value) || 0;
-        let totalSalgados = quibe + coxinha + travesseirinho + enroladinho + bolinha;
+        let totalSalgados = presunto_queijo + coxinha + travesseirinho + enroladinho;
         let totalPrice = (totalSalgados * pricePerUnit).toFixed(2);
 
         // Atualizando a barra de progresso e emojis
@@ -464,7 +457,7 @@
         }
 
         document.getElementById('total-info').textContent = `Total: R$ ${totalPrice}`;
-        return { totalSalgados, totalPrice, quibe, coxinha, travesseirinho, enroladinho, bolinha };
+        return { totalSalgados, totalPrice, presunto_queijo, coxinha, travesseirinho, enroladinho };
     }
     function formatDateTime(dateTime) {
         const date = new Date(dateTime);
@@ -476,7 +469,7 @@
         return `${day}/${month}/${year} ${hours}:${minutes}`;
     }
     function simulateSending() {
-        const { totalSalgados, totalPrice, quibe, coxinha, travesseirinho, enroladinho, bolinha } = calculateTotal();
+        const { totalSalgados, totalPrice, presunto_queijo, coxinha, travesseirinho, enroladinho } = calculateTotal();
         const address = document.getElementById('address').value;
         const name = document.getElementById('user-name').value;
         const payment = document.getElementById('payment').value;
@@ -502,11 +495,10 @@
         const formattedSchedule = formatDateTime(schedule);
 
         let messageHtml = `Olá, gostaria de fazer um pedido:<br>`;
-        if (quibe > 0) messageHtml += `<span style="color: #007bff;">Quibe:</span> ${quibe} unidades<br>`;
+        if (presunto_queijo > 0) messageHtml += `<span style="color: #007bff;">Presunto e Queijo:</span> ${presunto_queijo} unidades<br>`;
         if (coxinha > 0) messageHtml += `<span style="color: #dc3545;">Coxinha de Frango:</span> ${coxinha} unidades<br>`;
         if (travesseirinho > 0) messageHtml += `<span style="color: #28a745;">Travesseirinho de Carne:</span> ${travesseirinho} unidades<br>`;
         if (enroladinho > 0) messageHtml += `<span style="color: #ffc107;">Enroladinho de Salsicha:</span> ${enroladinho} unidades<br>`;
-        if (bolinha > 0) messageHtml += `<span style="color: #17a2b8;">Bolinha de Queijo:</span> ${bolinha} unidades<br>`;
         messageHtml += `<br><span style="color: #6c757d;">Endereço:</span> ${address}<br>`;
         messageHtml += `<span style="color: #6c757d;">Nome:</span> ${name}<br>`;
         messageHtml += `<span style="color: #6c757d;">Data e Hora de Entrega:</span> ${formattedSchedule}<br>`;
@@ -515,11 +507,10 @@
         messageHtml += `<span style="color: #28a745;">Valor Total:</span> R$ ${totalPrice}`;
 
         let messageText = `Olá, gostaria de fazer um pedido:\n`;
-        if (quibe > 0) messageText += `Quibe: ${quibe} unidades\n`;
+        if (presunto_queijo > 0) messageText += `Presunto e Queijo: ${presunto_queijo} unidades\n`;
         if (coxinha > 0) messageText += `Coxinha de Frango: ${coxinha} unidades\n`;
         if (travesseirinho > 0) messageText += `Travesseirinho de Carne: ${travesseirinho} unidades\n`;
         if (enroladinho > 0) messageText += `Enroladinho de Salsicha: ${enroladinho} unidades\n`;
-        if (bolinha > 0) messageText += `Bolinha de Queijo: ${bolinha} unidades\n`;
         messageText += `\nEndereço: ${address}\nNome: ${name}\nData e Hora de Entrega: ${formattedSchedule}\nForma de Pagamento: ${payment}\n\nTotal: ${totalSalgados} salgados\nValor Total: R$ ${totalPrice}`;
 
         document.getElementById('order-summary').innerHTML = messageHtml;
